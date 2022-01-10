@@ -98,3 +98,9 @@ hãy chạy với input: tại sao nên tiêm ngừa cho trẻ
 
 - find_docs.py: tìm kiếm dữ liệu liên quan trong data(vaccine.txt) với câu hỏi. Dựa vào similarity, tfidf (Thành)
 - infer.py: chú ý từ dòng 111
+
+- fixx lỗi add_code_sample_docstring ở dòng 26
+  ctrl+click vào add_code_sample_docstring follow link tới file utils
+  thêm dòng 
+  tokenizer_class=None, 
+  vào tham số gọi hàm
