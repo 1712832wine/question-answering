@@ -91,7 +91,7 @@ python infer.py
 
 
 
-<!-- CUSTOM -->
+# CUSTOM
 
 chạy file infer.py bằng lệnh: python infer.py
 hãy chạy với input: tại sao nên tiêm ngừa cho trẻ
