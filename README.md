@@ -96,5 +96,5 @@ python infer.py
 chạy file infer.py bằng lệnh: python infer.py
 hãy chạy với input: tại sao nên tiêm ngừa cho trẻ
 
-- find_docs.py: tìm kiếm dữ liệu liên quan tới câu hỏi dựa vào similarity, tfidf (Thành)
+- find_docs.py: tìm kiếm dữ liệu liên quan trong data(vaccine.txt) với câu hỏi. Dựa vào similarity, tfidf (Thành)
 - infer.py: chú ý từ dòng 111
