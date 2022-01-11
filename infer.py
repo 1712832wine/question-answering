@@ -1,3 +1,5 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from model.mrc_model import MRCQuestionAnswering
 from transformers import AutoTokenizer, pipeline, RobertaForQuestionAnswering
 import torch
@@ -108,14 +110,13 @@ def extract_answer(inputs, outputs, tokenizer):
     return plain_result
 
 
-if __name__ == "__main__":
-    model_checkpoint = "nguyenvulebinh/vi-mrc-base"
-    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
-    model = MRCQuestionAnswering.from_pretrained(model_checkpoint)
+app = Flask(__name__)
+CORS(app)
 
-    print(model)
-    # --------------------------------------
-    question = input("question: ")
+
+@app.route('/question-answering', methods=['POST'])
+def question_answering():
+    question = request.json['message']
     context = find_docs(question)
     QA_input = {
         'question': question,
@@ -126,6 +127,20 @@ if __name__ == "__main__":
     inputs_ids = data_collator(inputs)
     outputs = model(**inputs_ids)
     answer = extract_answer(inputs, outputs, tokenizer)[0]
-    print("answer: {}. Score start: {}, Score end: {}".format(answer['answer'],
-                                                              answer['score_start'],
-                                                              answer['score_end']))
+
+    return jsonify({
+        "success": True,
+        "answer": str(answer['answer']),
+        "score_start": answer['score_start'],
+        "score_end": answer['score_end']
+    })
+
+
+if __name__ == "__main__":
+    model_checkpoint = "nguyenvulebinh/vi-mrc-base"
+    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+    model = MRCQuestionAnswering.from_pretrained(model_checkpoint)
+
+    print(model)
+    # --------------------------------------
+    app.run(host='0.0.0.0', port=5001)
